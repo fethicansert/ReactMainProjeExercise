@@ -15,20 +15,23 @@ body {
 .App{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   height: 100vh;
+}
+
+.container{
+  width: 100%;
+  flex-grow: 1;
+  max-width: 1000px;
+  padding: 0 .5rem;
 }
 
 main{
   display: flex;
   flex-direction: column;
-  padding: 1rem 4rem;
-  height: 100%;
   width: 100%;
   overflow: scroll;
   position: relative;
-  max-width: 1000px;
 }
 
 .empty-text{
@@ -40,6 +43,10 @@ main{
   font-weight: 600;
   font-size: 1.5rem;
   color: rgb(31, 31, 31);
+}
+
+header{
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.447);
 }
 
 header,
@@ -59,6 +66,7 @@ footer{
   font-size: 1.5rem;
 }
 
+
 form{
   width: 100%;
   height: fit-content;
@@ -66,9 +74,10 @@ form{
   justify-content: space-between;
   align-items: center;
   margin:  0 auto;
-  padding:  0 4rem;
-  margin-top: 2rem;
-  max-width: 1000px;
+  padding:  .5rem .5rem;
+  margin: 1rem 0;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.392);
+  z-index: 999;
 }
 
 form input{
@@ -76,6 +85,7 @@ form input{
   padding: 1rem 0;
   font-size: 1.3rem;
   text-indent: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 form input::placeholder{
@@ -93,9 +103,7 @@ ul{
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
-  
+  align-items: center;  
 }
 
 main li{
@@ -105,10 +113,10 @@ main li{
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 1rem;
-  margin: .5rem;
-  background: rgb(232, 232, 232);
+  margin-bottom: .7rem;
+  background: rgb(248, 248, 248);
   border-radius: 5px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.497);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.497);
 
   text-transform: capitalize;
 }
@@ -167,8 +175,6 @@ input[type='checkbox']{
   border-radius: 8px;
 }
 
-
-
 .submit-btn:active,
 .submit-btn:hover{
   color: rgb(30, 160, 30);
@@ -178,9 +184,14 @@ input[type='checkbox']{
   opacity: .8;
 }
 
+.search{
+  padding: .5rem;
+  display: flex;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.392);
+}
 
-
-/* 
-  flex-grow = 1 => flex-container icinde her hangi bir item flex-container de kalan butun alani doldurmasini saglar
-  flex-itemlara farkli flex-grow degeri vermek onlari yuzdelik olarak ayarlamaya yarar
-*/
+.search input[type='text']{
+  padding: 1rem 0;
+  flex-grow: 1;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}

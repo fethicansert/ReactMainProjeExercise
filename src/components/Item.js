@@ -1,13 +1,25 @@
+import { useState } from 'react';
 import { FaBeer, FaPhoenixSquadron} from 'react-icons/fa'
 import { FaRegTrashAlt } from "react-icons/fa";
 
 function Item({item, deleteItem, handleChecked}){
-    console.log("Item Created");
+    
+    // console.log("Item Created");
+    const [deleted, setDeleted] = useState(false);
+    const deletedStyle = { opacity: !deleted ? '1' : '0', transition:'opacity 500ms ease'}
+
+    function deleleteItemWithAnimation(id){
+        setDeleted(prevState => !prevState);
+        setTimeout(()=>{
+            deleteItem(id);
+        },500);  
+    }
+
     return (
-        <li tabIndex={0}>
+        <li style={ deletedStyle } tabIndex={0}>
             <input type='checkbox' checked={ item.checked }  onChange={()=> handleChecked(item.id)}/>
             <label style={ (item.checked) ? {textDecoration: 'line-through'} : null }  onDoubleClick={() => deleteItem(item.id)}> { item.item } </label>
-            <FaRegTrashAlt role='button' onClick={()=> deleteItem(item.id)} aria-label={`Delete ${item.item}`}/> 
+            <FaRegTrashAlt role='button' onClick={()=> deleleteItemWithAnimation(item.id)} aria-label={`Delete ${item.item}`}/> 
         </li>
     );
 }

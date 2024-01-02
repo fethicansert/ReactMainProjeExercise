@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Footer({itemLength}) {
-  console.log("Footer Created");
+
   function getDate(){
       return new Date().getFullYear();
   }

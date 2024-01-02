@@ -2,7 +2,7 @@ import React from 'react'
 import Item from './Item';
 
 function ItemList({items, deleteItem, handleChecked}) {
-
+  // console.log("List Created");
   return (
     <ul>
     {items.map( item => {
