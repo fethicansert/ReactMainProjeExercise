@@ -3,63 +3,51 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Content from './components/Content';
 import User_Inputs from './components/User_Inputs'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Search from './components/Search';
 
 
 function App() {
-  
-  //Learn Split Includes Filter [...arr or ...obj]
-  const arr = ['cat','dog','bat'];
-  // const arrX = [1,2,3,4,5];
-  // console.log(arrX.includes());
-  const intArr = [1,2,3,4];
-  // console.log(intArr);
-  // console.log(...intArr);
+  const API_URL = 'http://localhost:3500/items';
 
-  const y = 'str';
-  // console.log(y);
-  // console.log(...y);
+  //React Hooks
+  const [items, setItems] = useState([]);
+  const [input, setInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [fetchError, setFetchError] = useState(null);
+  const inputFocusRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // const filterArr = arr.filter(item => item.includes(''));
-  // console.log(filterArr);
-  //includes return true or false according to giving statement
-  
-  
-  //My filter and include func
-  function myIncludes(arr,input){
-    let isMatchArr = [];
-    for(let i = 0; i<arr.length; i++){
-      for(let j = 0; j<arr[i].length; j++){
-        if(arr[i][j] === input){
-          isMatchArr.push(arr[i]);
-          break
-        }
+  useEffect( () => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if(!response.ok) throw Error(`Did not receieved expected data`)
+        const data = await response.json();
+        setItems(data);
+        setFetchError(null);
+      } catch(err) {
+        console.log(err.message);
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     }
-    return isMatchArr;
-  }
+    //Neden is Loading finally asamasinda setlendi ?
+    //Cunku fetchden olumlu veya olumsuz bir sonuc alsak bile iki secenekte de islemi bitirmis oluyor.
+    //try ve cath de ayri ayri setIsLoading kullanmamiza gerek yok. 
 
-  myIncludes(arr,'a');
-
-  const [items, setItems] = useState(
-    (localStorage.getItem('data') && JSON.parse(localStorage.getItem('data'))) || []
-  );
-
-  const [input, setInput] = useState('');
-
-  const [searchInput, setSearchInput] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('data',JSON.stringify(items));
-  },[items]);
-
-  useEffect(() => {
-   
-  },[input])
-
+    setTimeout(()=>{
+      (async () => await fetchData())();
+    },2000)
     
+  },[]);
+   
+  const newItems = { items: [{id:1,item:'item1'},{id:2,item:'item2'}]}
+  // fetch(`http://localhost:3500/items`,{method:'POST'});
+   
+  //Components Functions
   function handleChecked(id){
     setItems(prevItem => {
        return prevItem.map(item => item.id === id ? {...item, checked:!item.checked} : item);
@@ -96,9 +84,10 @@ function App() {
       checked : false,
       item : input
     };
-
+    
     setItems(prevItems => [...prevItems,newItem]);
     setInput('');
+    inputFocusRef.current.focus();
   }
 
   return (
@@ -110,13 +99,20 @@ function App() {
           handleInput={ handleInput } 
           input={ input } 
           deleleteSelected={ deleteSelected }
+          inputFocusRef={ inputFocusRef }
         />
         <Search handleSearch={ handleSearch } searchInput = { searchInput  }/>
-        <Content 
-          items={ items.filter( item => item.item.toLowerCase().includes( searchInput.toLowerCase())) } 
-          handleChecked={ handleChecked } 
-          deleteItem={ deleteItem }  
-        />
+        <main>
+          {!fetchError ? (
+              <Content 
+              items={ items.filter( item => item.item.toLowerCase().includes(searchInput.toLowerCase()) ) } 
+              handleChecked={ handleChecked } 
+              deleteItem={ deleteItem }  
+            />
+          ) : (
+            <p>{fetchError}</p>
+          )}
+        </main> 
       </div>
       <Footer itemLength={ items.length }/>
     </div>
@@ -124,3 +120,16 @@ function App() {
 }
 
 export default App;
+
+//const [state, setState] = useState({name:"Fethi"});
+// useEffect(() => {
+//    setState({name: "Fethi"});
+// },[state])
+
+//useEffect icinde setState kullanirken obj degisiminde dikkatli olmaliyiz
+//setState icinde yeni bir obje yaratmak onceki state ile degerleri ayni bile olsa 
+//prevState = { name: "Fethi"}
+//newState = { name: "Fethi" }
+//Farkli sayilacaktir cunku objler reference ile karsilastirma yapilir
+//Yeni bor obj yarattimizda onu tutan deger onun reference valuesu olur bu nedenle
+//prevState === newState false ve bu useEffectin loop yapmasinda neden olur cunku array dependeci statein degistigini dusunur

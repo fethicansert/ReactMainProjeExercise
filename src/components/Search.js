@@ -3,10 +3,10 @@ import { BsSearch } from "react-icons/bs";
 
 function Search({ handleSearch, searchInput}) {
   return (
-    <div className='search'>
+    <form className='search' onSubmit={ (e) => e.preventDefault()}>
       <input type='text' onChange={ handleSearch } value={ searchInput } required placeholder='Search Item' ></input>
-      <button role='button' aria-label='Search Button'><BsSearch/></button>
-    </div>
+      {/* <button role='button' aria-label='Search Button'><BsSearch/></button> */}
+    </form>
   )
 }
 

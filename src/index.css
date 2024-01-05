@@ -24,22 +24,18 @@ body {
   flex-grow: 1;
   max-width: 1000px;
   padding: 0 .5rem;
+  position: relative;
 }
 
 main{
   display: flex;
   flex-direction: column;
-  width: 100%;
   overflow: scroll;
-  position: relative;
+  text-align: center;
 }
 
 .empty-text{
-  position: absolute;
-  width: fit-content;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  margin-top: 2rem;
   font-weight: 600;
   font-size: 1.5rem;
   color: rgb(31, 31, 31);
@@ -88,11 +84,6 @@ form input{
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
-form input::placeholder{
-  font-size: 1.3rem;
-  text-indent: 10px;
-}
-
 form label{
   width: 130px;
   font-size: 1.3rem;
@@ -106,7 +97,7 @@ ul{
   align-items: center;  
 }
 
-main li{
+li{
   font-size: 1.1rem;
   width: 100%;
   display: flex;
@@ -121,14 +112,14 @@ main li{
   text-transform: capitalize;
 }
 
-main li svg{
+li svg{
   width: 25px;
   height: 25px;
   color: rgb(62, 132, 245);
   cursor: pointer;
 }
 
-main li svg:hover{
+li svg:hover{
   color: rgb(177, 56, 56);
 }
 
@@ -191,7 +182,9 @@ input[type='checkbox']{
 }
 
 .search input[type='text']{
-  padding: 1rem 0;
   flex-grow: 1;
+  padding: 1rem 0;
+  font-size: 1.3rem;
+  text-indent: 10px;
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
