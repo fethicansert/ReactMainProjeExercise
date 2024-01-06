@@ -1,19 +1,9 @@
 {
   "items": [
     {
-      "id": 1,
+      "id": "3f3cd01c-530f-4b25-af07-7976cd6df4df",
       "checked": false,
-      "item": "Item 1"
-    },
-    {
-      "id": 2,
-      "checked": true,
-      "item": "Item 2"
-    },
-    {
-      "id": 3,
-      "checked": true,
-      "item": "Item 3"
+      "item": "asdsa"
     }
   ]
 }

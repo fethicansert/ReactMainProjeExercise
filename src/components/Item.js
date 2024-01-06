@@ -12,11 +12,12 @@ function Item({item, deleteItem, handleChecked}){
         setDeleted(prevState => !prevState);
         setTimeout(()=>{
             deleteItem(id);
-        },500);  
+        },0);
+        //Delay was for animation waiting delete function until animation complete in css  
     }
 
     return (
-        <li style={ deletedStyle } tabIndex={0}>
+        <li  tabIndex={0}>
             <input type='checkbox' checked={ item.checked }  onChange={()=> handleChecked(item.id)}/>
             <label style={ (item.checked) ? {textDecoration: 'line-through'} : null }  onDoubleClick={() => deleteItem(item.id)}> { item.item } </label>
             <FaRegTrashAlt role='button' onClick={()=> deleleteItemWithAnimation(item.id)} aria-label={`Delete ${item.item}`}/> 
